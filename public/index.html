@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            font-size: 22px;
+        }
+        
+        input {
+            padding: 8px;
+            display: block;
+            margin: 8px auto;
+        }
+        
+        button {
+            padding: 8px;
+            background-color: rgb(29, 175, 126);
+            color: white;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>create product</h3>
+    <input type="text" id="name" placeholder="product name" />
+    <input type="text" id="price" placeholder="product price" />
+    <input type="text" id="desc" placeholder="product description" />
+    <input type="text" id="imgUrl" placeholder="url image" />
+    <button id="btn">create product</button>
+
+    <p id="result"></p>
+</body>
+
+<script>
+    const name = document.getElementById("name");
+    const price = document.getElementById("price");
+    const desc = document.getElementById("desc");
+    const imgUrl = document.getElementById("imgUrl");
+    const restul = document.getElementById("result");
+    const btn = document.getElementById("btn");
+
+    btn.addEventListener("click", () => {
+        alert("clicked");
+        const data = {
+            name: name.value,
+            price: price.value,
+            desc: desc.value,
+            imgUrl: imgUrl.value,
+        };
+        fetch("http://localhost:1337/create-product", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+        }).then((res) => {
+            res.json((data) => {
+                console.log(data);
+                const message = data.message;
+                restul.innerHTML = message;
+            });
+        });
+    });
+</script>
+
+</html>
